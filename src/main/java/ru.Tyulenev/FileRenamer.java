@@ -13,7 +13,7 @@ public class FileRenamer {
             if (getCountOfFilesInDir()>0) {
                 printFullFilesNameInFolder();
             } else System.out.println("Current folder (" + file.getAbsolutePath() +
-                    "is empty");
+                    ") is empty");
 
         } else System.out.println("Current folder (" + file.getAbsolutePath() +
                 ") does not exsist");
@@ -41,6 +41,24 @@ public class FileRenamer {
     }
 
     public void addStrToFilesInDir(String addedStr) {
+        if (listOfFiles != null) {
+            for (File fileInDir:listOfFiles) {
+                File nf = new File(fileInDir.getParent() + "\\" + addedStr + fileInDir.getName());
+                fileInDir.renameTo(nf);
+            }
+        } else System.out.println("Adding string to file name failed");
+    }
 
+    public void deleteStringInBegin(String strDel) {
+        if (listOfFiles != null) {
+            for (File fileInDir:listOfFiles) {
+                StringBuilder fileName = new StringBuilder(fileInDir.getName());
+                if (fileName.toString().startsWith(strDel)) {
+                    fileName.delete(0,strDel.length());
+                    File nf = new File(fileInDir.getParent() + "\\" + fileName.toString());
+                    fileInDir.renameTo(nf);
+                }
+            }
+        } else System.out.println("Adding string to file name failed");
     }
 }
